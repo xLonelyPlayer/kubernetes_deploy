@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: news-system-configmap
+data:
+  HOST_DB: svc-news-database:3306
+  USER_DB: root
+  PASS_DB: Password123!@
+  DATABASE_DB: empresa
