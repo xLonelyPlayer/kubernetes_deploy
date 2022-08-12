@@ -41,6 +41,12 @@ portal_replicaset:
 
 replicaset: portal_replicaset
 
+# Deployment
+nginx_deployment:
+	kubectl apply -f nginx-deployment.yaml
+
+deployment: nginx_deployment
+
 # Cleaning stuff
 clean_pods:
 	kubectl delete pods --all
@@ -54,7 +60,18 @@ clean_configmap:
 clean_replicaset:
 	kubectl delete replicaset --all
 
-clean: clean_pods clean_svc clean_configmap clean_replicaset
+clean_deployment:
+	kubectl delete deployment --all
+
+clean: clean_deployment \
+	clean_replicaset \
+	clean_configmap \
+	clean_svc \
+	clean_pods \
 
 # Starts everything
-all: configmap pods svc replicaset
+all: configmap \
+	pods \
+	svc \
+	replicaset \
+	deployment
