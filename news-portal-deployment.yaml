@@ -1,7 +1,7 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: news-portal-replicaset
+  name: news-portal-deployment
 spec:
   template:
     metadata:

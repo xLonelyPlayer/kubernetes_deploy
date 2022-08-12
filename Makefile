@@ -35,17 +35,20 @@ system_svc:
 
 svc: database_svc portal_svc system_svc
 
-# ReplicaSets
-portal_replicaset:
-	kubectl apply -f news-portal-replicaset.yaml
-
-replicaset: portal_replicaset
-
 # Deployment
 nginx_deployment:
 	kubectl apply -f nginx-deployment.yaml
 
-deployment: nginx_deployment
+portal_deployment:
+	kubectl apply -f news-portal-deployment.yaml
+
+system_deployment:
+	kubectl apply -f news-system-deployment.yaml
+
+database_deployment:
+	kubectl apply -f news-database-deployment.yaml
+
+deployment: portal_deployment system_deployment database_deployment
 
 # Cleaning stuff
 clean_pods:
@@ -73,5 +76,4 @@ clean: clean_deployment \
 all: configmap \
 	pods \
 	svc \
-	replicaset \
 	deployment
