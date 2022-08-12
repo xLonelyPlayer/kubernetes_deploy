@@ -1,4 +1,5 @@
 
+# Pods
 database:
 	kubectl apply -f news-database.yaml
 
@@ -10,6 +11,7 @@ system:
 
 pods: database portal system
 
+# Configmaps
 database_configmap:
 	kubectl apply -f news-database-configmap.yaml
 
@@ -21,6 +23,7 @@ system_configmap:
 
 configmap: database_configmap portal_configmap system_configmap
 
+# Services
 database_svc:
 	kubectl apply -f svc-news-database.yaml
 
@@ -32,6 +35,13 @@ system_svc:
 
 svc: database_svc portal_svc system_svc
 
+# ReplicaSets
+portal_replicaset:
+	kubectl apply -f news-portal-replicaset.yaml
+
+replicaset: portal_replicaset
+
+# Cleaning stuff
 clean_pods:
 	kubectl delete pods --all
 
@@ -41,6 +51,10 @@ clean_svc:
 clean_configmap:
 	kubectl delete configmap --all
 
-clean: clean_pods clean_svc clean_configmap
+clean_replicaset:
+	kubectl delete replicaset --all
 
-all: pods svc configmap
+clean: clean_pods clean_svc clean_configmap clean_replicaset
+
+# Starts everything
+all: pods svc configmap replicaset
