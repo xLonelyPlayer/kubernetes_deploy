@@ -57,4 +57,4 @@ clean_replicaset:
 clean: clean_pods clean_svc clean_configmap clean_replicaset
 
 # Starts everything
-all: pods svc configmap replicaset
+all: configmap pods svc replicaset
