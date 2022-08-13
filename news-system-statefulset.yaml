@@ -18,6 +18,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: news-system-configmap
+          volumeMounts:
+            - name: images
+              mountPath: /var/www/html/uploads
+            - name: session
+              mountPath: /tmp
+      volumes:
+        - name: images
+          persistentVolumeClaim:
+            claimName: images-pvc
+        - name: session
+          persistentVolumeClaim:
+            claimName: session-pvc
   selector:
     matchLabels:
       app: news-system

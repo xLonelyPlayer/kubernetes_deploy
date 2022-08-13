@@ -36,10 +36,19 @@ system_statefulset:
 
 statefulset: system_statefulset
 
+images_pvc:
+	kubectl apply -f images-pvc.yaml
+
+session_pvc:
+	kubectl apply -f session-pvc.yaml
+
+pvc: images_pvc session_pvc
+
 all: configmap \
 	svc \
 	deployment \
-	statefulset
+	statefulset \
+	pvc
 
 clean_svc:
 	kubectl delete svc --all
@@ -53,9 +62,13 @@ clean_deployment:
 clean_statefulset:
 	kubectl delete statefulset --all
 
+clean_pvc:
+	kubectl delete pvc --all
+
 clean: clean_deployment \
 	clean_configmap \
 	clean_svc \
-	clean_statefulset
+	clean_statefulset \
+	clean_pvc
 
 
