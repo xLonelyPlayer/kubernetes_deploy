@@ -44,6 +44,11 @@ session_pvc:
 
 pvc: images_pvc session_pvc
 
+portal_hpa:
+	kubectl apply -f news-portal-hpa.yaml
+
+hpa: portal_hpa
+
 all: configmap \
 	svc \
 	deployment \
