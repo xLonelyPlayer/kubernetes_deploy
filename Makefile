@@ -1,43 +1,24 @@
-
-# Pods
-database:
-	kubectl apply -f news-database.yaml
-
-portal:
-	kubectl apply -f news-portal.yaml
-
-system:
-	kubectl apply -f news-system.yaml
-
-pods: database portal system
-
-# Configmaps
-database_configmap:
-	kubectl apply -f news-database-configmap.yaml
+system_configmap:
+	kubectl apply -f news-system-configmap.yaml
 
 portal_configmap:
 	kubectl apply -f news-portal-configmap.yaml
 
-system_configmap:
-	kubectl apply -f news-system-configmap.yaml
+database_configmap:
+	kubectl apply -f news-database-configmap.yaml
 
 configmap: database_configmap portal_configmap system_configmap
 
-# Services
+system_svc:
+	kubectl apply -f svc-news-system.yaml
+
 database_svc:
 	kubectl apply -f svc-news-database.yaml
 
 portal_svc:
 	kubectl apply -f svc-news-portal.yaml
 
-system_svc:
-	kubectl apply -f svc-news-system.yaml
-
 svc: database_svc portal_svc system_svc
-
-# Deployment
-nginx_deployment:
-	kubectl apply -f nginx-deployment.yaml
 
 portal_deployment:
 	kubectl apply -f news-portal-deployment.yaml
@@ -50,15 +31,15 @@ database_deployment:
 
 deployment: portal_deployment system_deployment database_deployment
 
-# Volume
-pod_volume:
-	kubectl apply -f pod-volume.yaml
+system_statefulset:
+	kubectl apply -f news-system-statefulset.yaml
 
-volume: pod_volume
+statefulset: system_statefulset
 
-# Cleaning stuff
-clean_pods:
-	kubectl delete pods --all
+all: configmap \
+	svc \
+	deployment \
+	statefulset
 
 clean_svc:
 	kubectl delete svc --all
@@ -69,14 +50,12 @@ clean_configmap:
 clean_deployment:
 	kubectl delete deployment --all
 
+clean_statefulset:
+	kubectl delete statefulset --all
+
 clean: clean_deployment \
 	clean_configmap \
 	clean_svc \
-	clean_pods \
+	clean_statefulset
 
-# Starts everything
-all: configmap \
-	pods \
-	svc \
-	deployment \
-	volume
+
