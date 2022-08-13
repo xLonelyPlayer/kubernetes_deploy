@@ -50,6 +50,12 @@ database_deployment:
 
 deployment: portal_deployment system_deployment database_deployment
 
+# Volume
+pod_volume:
+	kubectl apply -f pod-volume.yaml
+
+volume: pod_volume
+
 # Cleaning stuff
 clean_pods:
 	kubectl delete pods --all
@@ -60,14 +66,10 @@ clean_svc:
 clean_configmap:
 	kubectl delete configmap --all
 
-clean_replicaset:
-	kubectl delete replicaset --all
-
 clean_deployment:
 	kubectl delete deployment --all
 
 clean: clean_deployment \
-	clean_replicaset \
 	clean_configmap \
 	clean_svc \
 	clean_pods \
@@ -76,4 +78,5 @@ clean: clean_deployment \
 all: configmap \
 	pods \
 	svc \
-	deployment
+	deployment \
+	volume

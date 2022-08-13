@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      volumeMounts:
+        - mountPath: /container-volume
+          name: first-volume
+    - name: jenkins-container
+      image: jenkins/jenkins:alpine
+      volumeMounts:
+        - mountPath: /container-volume
+          name: first-volume
+  volumes:
+    - name: first-volume
+      hostPath:
+        path: /C/Users/augus/OneDrive/Documentos/GitHub/kubernetes_deploy/volume
+        type: Directory
