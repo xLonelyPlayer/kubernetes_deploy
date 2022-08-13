@@ -18,6 +18,20 @@ spec:
           envFrom:
             - configMapRef:
                 name: news-system-configmap
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /inserir_noticias.php
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 3
           volumeMounts:
             - name: images
               mountPath: /var/www/html/uploads
